@@ -2,8 +2,14 @@ import React, { useState,useEffect,useRef } from 'react';
 import {formatTimeStamp} from './utilities.js';
 import * as d3 from 'd3';
 
+/* Alert: Functional Compoent that takes a message and displays an alert banner */
+function Alert({msg,type}){
+  const alertMapping ={error:'alert-error', general: 'alert-general', success: 'alert-success', warning:'alert-warning' }
+  return (<div className={`alert ${alertMapping[type]}`}>{msg}</div>);
+}
+
 /* ToolTip: Functional component that takes text returns a simple tooltip and wrapper */
-const ToolTip = ({text, delay, children}) => {
+function ToolTip({text, delay, children}){
   let timeout;
   const [active, setActive] = useState(false);
 
@@ -167,4 +173,4 @@ function YearsSelection({years, handleSelection, currentSelection}){
         </div>
     );
 }
-export { ToolTip, PaginatedNav, JobsTable, YearsSelection, Loader, Elipsis, SimpleBarChart};
+export { ToolTip, PaginatedNav, JobsTable, YearsSelection, Loader, Elipsis, SimpleBarChart,Alert};

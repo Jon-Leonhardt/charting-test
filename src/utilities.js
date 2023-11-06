@@ -1,16 +1,20 @@
 /* CallAPI: Used to Fetch Data from API endpoint, resolve promise and return json payload from repsonse */
-async function CallAPI(){
-  try {
-    const response = await fetch('https://dsg-api-test.k2-app.com/ats/search/all');
-    const jobs = await response.json();
-    return jobs;
+async function CallAPI(url,handleError){
+    try {
+      const response = await fetch(url);
+      const jobs = await response.json();
+      return jobs; 
+    } 
+    catch (error) {
+      // nomrally a callback function would be passed in here in order to handle the error by setting a variable that would result in displaying an error message in the main app */
+      console.error("A problem was encountered while fetching the data:", error);
+      handleError();
+    }
+      
+    return null;
   }
-  catch (error) {
-    // nomrally a callback function would be passed in here in order to handle the error by setting a variable that would result in displaying an error message in the main app */
-    console.error("A problem was encountered while fetching the data:", error);
-  }
-    
-  }
+  
+  
   
   /* formatTimeStamp: Takes date object and retuns a formatted string of date for display */
   function formatTimeStamp(date){
