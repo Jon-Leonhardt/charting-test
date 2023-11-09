@@ -53,7 +53,7 @@ function Elipsis({text, textLimit}){
    function PaginatedNav({pages,callBack, currentPage}){
     const nav =[];
     for(let i=1;i<=pages;i++){
-      nav.push(<li key={i} value={i} onClick={()=>callBack(i)} className={currentPage === i?'paginated-nav-selected':'paginated-nav'}><a href='#'>{i}</a></li>);
+      nav.push(<li key={i} value={i} onClick={()=>callBack(i)} className={currentPage === i?'paginated-nav-selected':'paginated-nav'}>{i}</li>);
     }
     return (
     <nav>
@@ -75,7 +75,7 @@ function Elipsis({text, textLimit}){
     const limit = jobs.length > jobsPerPage && jobs.length >= (start + jobsPerPage)?jobsPerPage * currentPage:jobs.length;
     const rows = jobs.slice(start,limit).map((d,i)=>{
       return(
-        <tr key={`row-${i}-page-${currentPage}`} scope='row' >
+        <tr key={`row-${i}-page-${currentPage}`} >
           <td className='jobs-table-cell'  key={`cell-${d.websiteTitle}-${i}-page-${currentPage}`} data-label='Job Title'><Elipsis text={d.websiteTitle} textLimit={30} /></td>
           <td className='jobs-table-cell' key={`cell-$${d.websiteOrganization}-${i}-page-${currentPage}`} data-label='Organization'><Elipsis text={d.websiteOrganization} textLimit={30} /></td>
           <td className='jobs-table-cell' key={`cell-$${d.websiteLocation}-${i}-page-${currentPage}`} data-label='Location'><Elipsis text={d.websiteLocation} textLimit={30} /></td>
@@ -133,7 +133,7 @@ function YearsSelection({years, handleSelection, currentSelection}){
         
         // Adding X scale and axis
         const x = d3.scaleBand()
-        .range([ 0, width ])
+        .range([ 0, width-margin.left ])
         .domain(data.map(function(d) { return d.month; }))
         .padding(0.2);
         svg.append('g')
