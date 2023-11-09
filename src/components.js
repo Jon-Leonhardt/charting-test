@@ -1,5 +1,5 @@
 import React, { useState,useEffect,useRef } from 'react';
-import {formatTimeStamp} from './utilities.js';
+import {formatTimeStamp,sortJobsByDate} from './utilities.js';
 import * as d3 from 'd3';
 
 /* Alert: Functional Compoent that takes a message and displays an alert banner */
@@ -67,13 +67,13 @@ function Elipsis({text, textLimit}){
       setCurrentPage(1); // resets current page when a new month or year is selected and the jobs array changes only
     },[jobs,jobsPerPage]);
   
-  
+    
     const pages = Math.ceil(jobs.length / jobsPerPage);
     const tableHeader= (<tr><th width='35%' scope='col'>Job Title</th><th width='25%' scope='col'>Organization</th><th width='15%' scope='col'>Location</th><th width='15%' scope='col'>Posted</th></tr>);
     const[currentPage,setCurrentPage] = useState(1);
     const start = (currentPage-1) * jobsPerPage;
     const limit = jobs.length > jobsPerPage && jobs.length >= (start + jobsPerPage)?jobsPerPage * currentPage:jobs.length;
-    const rows = jobs.slice(start,limit).map((d,i)=>{
+    const rows = sortJobsByDate(jobs,'asc').slice(start,limit).map((d,i)=>{
       return(
         <tr key={`row-${i}-page-${currentPage}`} >
           <td className='jobs-table-cell'  key={`cell-${d.websiteTitle}-${i}-page-${currentPage}`} data-label='Job Title'><Elipsis text={d.websiteTitle} textLimit={30} /></td>

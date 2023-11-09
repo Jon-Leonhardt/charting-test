@@ -31,13 +31,15 @@ async function CallAPI(url,handleError){
   function groupJobsByDate(jobs){
     // since we only need group data by date under current specs, will store an array of each data with its month as key
     // this will also make it easy to calc month aggregates since we wont need to iterate or regroup later on downstream when we display listings on date click 
+   
     let sanitizedList = {};
     
     jobs.searches.forEach(d=>{
       const{websiteTitle, websiteOrganization, websiteLocation, websiteDatePublished} = d;
       // assumes all dates in source data are correct, as they will not be validated but this can be done easily.
+      console.log(websiteDatePublished)
       const date = new Date(websiteDatePublished);
-      const month = getMonthAbrvName(date.getUTCMonth());
+      const month = getMonthAbrvName(date.getMonth());
       const year = date.getFullYear();
       const dateIndex = `${month} ${year}`;
       //checks to see if an object is already created for a given month and year and creates one if it isnt
@@ -73,7 +75,11 @@ function sortDateIndex(arr,order ){
     if(order==='desc') return arr.sort((a,b)=>monthIndex[b.month] - monthIndex[a.month])
     return arr.sort((a,b)=>monthIndex[a.month]-monthIndex[b.month])
   }
-  
+  function sortJobsByDate(arr,order){
+    console.log(arr);
+    if(order==='desc') return arr.sort((a,b)=>b.date - a.date)
+    return arr.sort((a,b)=>a.date - b.date)
+  }
   /* getYears: Takes the entire list of jobs data and returns an array of all years taht appear in data */
   function getYears(jobs){
     const years = [];
@@ -86,4 +92,4 @@ function sortDateIndex(arr,order ){
   }
 
 
-export {CallAPI, getAggCounts, groupJobsByDate, getMonthAbrvName, formatTimeStamp, getYears, sortDateIndex}
+export {CallAPI, getAggCounts, groupJobsByDate, getMonthAbrvName, formatTimeStamp, getYears, sortDateIndex,sortJobsByDate}
