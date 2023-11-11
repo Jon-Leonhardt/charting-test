@@ -123,11 +123,9 @@ function YearsSelection({years, handleSelection, currentSelection}){
     useEffect(() => {
         const svg = d3.select(ref.current);
         svg.selectAll('*').remove();
-        //svg.attr('width', width + margin.left + margin.right)
+
         svg.attr('width', width)
-        //.attr('height', height + margin.top + margin.bottom)
-        .attr('height', height)
-        //.attr('transform',`translate(${margin.left},${margin.top})`);
+        .attr('height', height);
 
         const selection = svg.selectAll('rect').data(data);
         
@@ -144,7 +142,7 @@ function YearsSelection({years, handleSelection, currentSelection}){
         .style('text-anchor', 'end');
 
         // Adding Y scale and axis
-        var y = d3.scaleLinear()
+        const y = d3.scaleLinear()
         .domain([0, d3.max(data, d=> d.count)])
         .range([ height-margin.top-margin.bottom, 0]);
         svg.append('g')
@@ -168,7 +166,7 @@ function YearsSelection({years, handleSelection, currentSelection}){
     },[selected,data]);
 
     return (
-        <div className='simple-bar-chart' width={width+margin.left+margin.right}  >
+        <div className='simple-bar-chart' width={width}  >
             <svg  ref={ref}  />
         </div>
     );
