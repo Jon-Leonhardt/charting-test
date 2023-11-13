@@ -37,7 +37,6 @@ async function CallAPI(url,handleError){
     jobs.searches.forEach(d=>{
       const{websiteTitle, websiteOrganization, websiteLocation, websiteDatePublished} = d;
       // assumes all dates in source data are correct, as they will not be validated but this can be done easily.
-      console.log(websiteDatePublished)
       const date = new Date(websiteDatePublished);
       const month = getMonthAbrvName(date.getMonth());
       const year = date.getFullYear();
@@ -76,7 +75,6 @@ function sortDateIndex(arr,order ){
     return arr.sort((a,b)=>monthIndex[a.month]-monthIndex[b.month])
   }
   function sortJobsByDate(arr,order){
-    console.log(arr);
     if(order==='desc') return arr.sort((a,b)=>b.date - a.date)
     return arr.sort((a,b)=>a.date - b.date)
   }
