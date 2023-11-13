@@ -1,0 +1,7 @@
+.simple-bar-chart-bar{
+    fill:rgb(32, 168, 241);
+    cursor:pointer;
+  }
+  .simple-bar-chart-bar.selected{
+    fill:rgb(25, 126, 180);
+  }

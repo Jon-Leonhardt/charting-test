@@ -1,7 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import {JobsTable, YearsSelection, Loader, SimpleBarChart,Alert} from './components.js'
-import {CallAPI, getAggCounts, groupJobsByDate, getYears} from './utilities.js'
+import {JobsTable, YearsSelection, Loader, SimpleBarChart,Alert} from './Components/index.js';
+import {CallAPI, getAggCounts, groupJobsByDate, getYears} from './utilities.js';
+import Styled from 'styled-components';
 import './App.css';
+
+const MainBody = Styled.div`
+  text-align: center;
+  margin: auto;
+`;
+
+const PageHeader = Styled.header`
+  background-color:rgb(32, 168, 241);
+  height: 100px;
+  margin-top:0px;
+  vertical-align: middle;
+  background-image: url('https://static.vecteezy.com/system/resources/previews/006/998/394/non_2x/blue-abstract-background-blue-background-design-abstract-futuristic-background-free-vector.jpg');
+`;
+
+const ChartContainer = Styled.div`
+  vertical-align: middle;
+  min-height: 200px;
+  display:inline-block;
+  align-items:center;
+`;
 
 
 function App() {
@@ -41,21 +62,21 @@ function App() {
   
   return (
     <div className='App'>
-      <header className='page-header'>
+      <PageHeader className='page-header'>
         
-      </header>
+      </PageHeader>
       {
         !loadError ?
         (
-          <div className='mainBody'>
+          <MainBody>
           <h3>Job Postings by Month {selectedYear !== -1 && `for ${selectedYear}`}</h3>
             
-            <div className='chart-container'>
+            <ChartContainer>
               {years.length > 0 && <YearsSelection currentSelection={selectedYear} years ={years} handleSelection={(e)=>{setSelectedYear(e); setSelection(-1)}} /> }
               {jobs?<SimpleBarChart width={width} height={300} data={getAggCounts(jobs, selectedYear)} yAxisTitle='Months' callBack={(e,d)=>{setSelection(d)}} selected={currentSelection} />:<Loader />}
               {currentSelection!==-1 && <JobsTable jobs={jobs[currentSelection].jobs} jobsPerPage={10} width={width}  />}
-            </div>
-          </div>):<Alert msg='There was an error fetching the data. Page loaded with Errors' type='error' />
+            </ChartContainer>
+          </MainBody>):<Alert msg='There was an error fetching the data. Page loaded with Errors' type='error' />
         }
     </div>
   );
